@@ -1,3 +1,4 @@
+import os
 import multiprocessing
 import requests
 from lxml import etree
@@ -37,14 +38,15 @@ def get_grade(student_id):
 
 def save_results(grade_list, res_file_path):
 	"""Write grade lists in a csv file."""
-	with open(res_file_path, 'a') as res_file:
+	print('saving results in {0}'.format(res_file_path))
+	with open(res_file_path, 'w') as res_file:
 		csv_writer = csv.writer(res_file)
 		csv_writer.writerows(grade_list)
 
 def save_logs(failed_list, log_file_path):
 	"""Believe me, This method does nothing informative."""
 	return
-	with open(log_file_path, 'a') as res_file:
+	with open(log_file_path, 'w') as res_file:
 		csv_writer = csv.writer(res_file)
 		csv_writer.writerows(failed_list)
 
@@ -102,6 +104,8 @@ def get_grade_list(student_id_range):
 	if len(failed_list) > 0:
 		save_logs(failed_list, log_file_path)
 
+	return (res_file_path, log_file_path)
+
 def get_student_id_ranges():
 	"""Divide the settings.student_id_range to settings.number_of_threads ranges."""
 	start = settings.student_id_range[0]
@@ -116,6 +120,29 @@ def get_student_id_ranges():
 
 	return student_id_ranges
 
+def wrap_up(file_paths):
+	all_grades_list = []
+	for res_file_path, _ in file_paths:
+		if not os.path.exists(res_file_path):
+			continue
+		print('wrapping up {0}'.format(res_file_path))
+		with open(res_file_path, 'r') as res_file:
+			csv_reader = csv.reader(res_file)
+			grade_sub_list = list(csv_reader)
+			all_grades_list += grade_sub_list
+	all_grades_list.sort(key=lambda grade: grade[0])
+
+	all_res_file_path = \
+		settings.res_file_path_template.format(
+			settings.student_id_range[0], 
+			settings.student_id_range[1]
+	)
+	save_results(all_grades_list, all_res_file_path)
+
+	for res_file_path, _ in file_paths:
+		if os.path.exists(res_file_path):
+			os.remove(res_file_path)
+
 def attack():
 	"""Save grades of the students with ids in the range given in settings.py in csv files"""
 	student_id_ranges = get_student_id_ranges()
@@ -123,11 +150,11 @@ def attack():
 	
 	print('let\'s light up the party ...')
 
-	pool.map(get_grade_list, student_id_ranges)
+	file_paths = pool.map(get_grade_list, student_id_ranges)
 	pool.close()
 	pool.join()
 
-	print('')
+	wrap_up(file_paths)
 
 if __name__ == '__main__':
 	attack()
