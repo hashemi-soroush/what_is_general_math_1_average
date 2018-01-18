@@ -121,6 +121,8 @@ def get_student_id_ranges():
 	return student_id_ranges
 
 def wrap_up(file_paths):
+	"""Merge all csv files in a single one and remove them afterwards."""
+	# read csv files and sort grade list according to student ids
 	all_grades_list = []
 	for res_file_path, _ in file_paths:
 		if not os.path.exists(res_file_path):
@@ -132,6 +134,7 @@ def wrap_up(file_paths):
 			all_grades_list += grade_sub_list
 	all_grades_list.sort(key=lambda grade: grade[0])
 
+	# save the merged list
 	all_res_file_path = \
 		settings.res_file_path_template.format(
 			settings.student_id_range[0], 
@@ -139,6 +142,7 @@ def wrap_up(file_paths):
 	)
 	save_results(all_grades_list, all_res_file_path)
 
+	# remove all mini csv files
 	for res_file_path, _ in file_paths:
 		if os.path.exists(res_file_path):
 			os.remove(res_file_path)
@@ -155,6 +159,10 @@ def attack():
 	pool.join()
 
 	wrap_up(file_paths)
+
+	print('😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈')
+	print('\tenjoy spying')
+	print('😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈 😈')
 
 if __name__ == '__main__':
 	attack()

@@ -2,8 +2,8 @@ import os
 
 number_of_threads = 40
 student_id_range = (
-	94102500, 
-	94102900)
+	94102300, 
+	94102500)
 # TODO:
 # student_id_list_file_path = None 
 
