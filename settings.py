@@ -1,18 +1,23 @@
 import os
+from config import *
 
-number_of_threads = 40
-student_id_range = (
-	94102300, 
-	94102500)
 # TODO:
 # student_id_list_file_path = None 
 
+number_of_threads = 40
 retry_count = 10
 timeout = (2, 2)
 
-url = 'http://mehr.sharif.ir/~calculus/gm1_2017/Results.php?course=eng'
+course_id_to_course_name = {
+	1: 'calc1', 
+	2: 'calc2', 
+	3: 'diff', 
+	4: 'eng'
+}
+
+url = 'http://mehr.sharif.ir/~calculus/gm1_2017/Results.php'
 method = 'POST'
-query_string = 'course=eng'
+query_string = 'course={0}'.format(course_id_to_course_name[course])
 form_data = 'ID={0}'
 headers = {
 	'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8', 
