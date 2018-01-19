@@ -1,19 +1,19 @@
 import os
 from config import *
 
-# TODO:
-# student_id_list_file_path = None 
-
-number_of_threads = 40
-retry_count = 10
-timeout = (2, 2)
-
 course_id_to_course_name = {
 	1: 'calc1', 
 	2: 'calc2', 
 	3: 'diff', 
 	4: 'eng'
 }
+
+# TODO:
+# student_id_list_file_path = None 
+
+number_of_threads = 40
+retry_count = 10
+timeout = (2, 2)
 
 url = 'http://mehr.sharif.ir/~calculus/gm1_2017/Results.php'
 method = 'POST'
@@ -36,5 +36,5 @@ headers = {
 
 if not os.path.exists('res_files'):
 	os.mkdir('res_files')
-res_file_path_template = os.path.join('res_files', 'res_{0}_to_{1}.csv')
-log_file_path_template = os.path.join('res_files', 'bad_ids_{0}_to_{1}.csv')
+marks_file_path_template = os.path.join('res_files', course_id_to_course_name[course] + '_marks_{0}_to_{1}.csv')
+failures_file_path_template = os.path.join('res_files', course_id_to_course_name[course] + '_failures_{0}_to_{1}.csv')

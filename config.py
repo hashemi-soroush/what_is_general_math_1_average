@@ -5,7 +5,7 @@
 # 2: general math 2
 # 3: differential equations
 # 4: engineering math
-course = 1
-student_id_range = (96103100, 96103900)
+course = 4
+student_id_range = (92100000, 92112000)
 
 #################################################
