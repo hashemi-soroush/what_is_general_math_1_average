@@ -14,7 +14,8 @@ def get_html(student_id):
 		headers=settings.headers, 
 		params=settings.query_string, 
 		data=settings.form_data.format(student_id), 
-		timeout=settings.timeout
+		timeout=settings.timeout, 
+		verify=False
 	)
 	
 	if resp is None or resp.status_code != 200:
@@ -89,7 +90,8 @@ def get_marks_list(student_id_range):
 					break
 				marks_list.append([student_id] + mark)
 				break
-			except:
+			except Exception as e:
+				print(e)
 				print('\tretrying {0} . . .'.format(student_id))
 				continue
 		if not successful:

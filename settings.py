@@ -15,7 +15,7 @@ number_of_threads = 40
 retry_count = 10
 timeout = (2, 2)
 
-url = 'http://mehr.sharif.ir/~calculus/gm1_2017/Results.php'
+url = 'http://calculus.math.sharif.edu/gm2_2018/Results.php'
 method = 'POST'
 query_string = 'course={0}'.format(course_id_to_course_name[course])
 form_data = 'ID={0}'
@@ -27,11 +27,11 @@ headers = {
 	'Connection': 'keep-alive', 
 	'Content-Length': '11', 
 	'Content-Type': 'application/x-www-form-urlencoded', 
-	'Host': 'mehr.sharif.ir', 
-	'Origin': 'http://mehr.sharif.ir', 
-	'Referer': 'http://mehr.sharif.ir/~calculus/gm1_2017/Results.php?course=eng', 
+	'Host': 'calculus.math.sharif.edu', 
+	'Origin': "http://calculus.math.sharif.edu", 
+	'Referer': "http://calculus.math.sharif.edu/gm2_2018/Results.php?course=calc2", 
 	'Upgrade-Insecure-Requests': '1', 
-	'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36', 
+	'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36', 
 }
 
 if not os.path.exists('res_files'):
