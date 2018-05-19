@@ -42,9 +42,10 @@ def save_marks(marks_list, marks_file_path):
 	if len(marks_list) == 0:
 		return
 	print('saving marks in {0}'.format(marks_file_path))
-	with open(marks_file_path, 'w') as marks_file:
+	with open(marks_file_path, 'a') as marks_file:
 		csv_writer = csv.writer(marks_file)
 		csv_writer.writerows(marks_list)
+		marks_file.flush()
 
 def save_failures(failures_list, failures_file_path):
 	"""Write failures list in a csv file. 
@@ -54,9 +55,10 @@ def save_failures(failures_list, failures_file_path):
 	if len(failures_list) == 0:
 		return
 	print('saving failures in {0}'.format(failures_file_path))
-	with open(failures_file_path, 'w') as failures_file:
+	with open(failures_file_path, 'a') as failures_file:
 		csv_writer = csv.writer(failures_file)
 		csv_writer.writerows(failures_list)
+		failures_file.flush()
 
 def get_marks_list(student_id_range):
 	"""Write marks list of students with ids in the argument in a csv file.
@@ -120,7 +122,7 @@ def get_student_id_ranges():
 	step = int((end - start) / count)
 	for i in range(count):
 		student_id_ranges.append([start + i*step, start + (i+1)*step])
-	student_id_ranges[-1] += list(range(student_id_ranges[-1][-1], end))
+	student_id_ranges[-1][-1] = end
 
 	return student_id_ranges
 
